@@ -20,10 +20,11 @@ public class Utilisateur {
 	}
 
 	// constructeur pour connexion
-	public Utilisateur(String pseudo, String motDePasse) {
+	public Utilisateur(String pseudo, String email, String motDePasse) {
 		super();
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
+		this.email = email;
 	}
 
 	// constructeur sans noUtilisateur pour inscription
@@ -60,6 +61,8 @@ public class Utilisateur {
 		this.credit = credit;
 		this.administrateur = administrateur;
 	}
+
+	
 
 	public int getNoUtilisateur() {
 		return noUtilisateur;

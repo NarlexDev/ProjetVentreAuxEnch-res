@@ -8,6 +8,15 @@ import fr.eni.controlers.BusinessException;
 import fr.eni.dal.DAOFactory;
 
 public class UtilisateurManager {
+	
+	public boolean connexion(String pseudo, String email, String motDePasse) throws BusinessException {
+		BusinessException exception = new BusinessException();
+		Utilisateur utilisateur = new Utilisateur(pseudo, email, motDePasse);
+		
+		
+		return false;
+		
+	}
 
 	public Utilisateur ajouter(String pseudo, String nom, String prenom, String email, String telephone, String rue,
 			String codePostal, String ville, String motDePasse, String motDePasseBis, int credit, int administrateur)
