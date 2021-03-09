@@ -1,21 +1,33 @@
 package fr.eni.bll;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.eni.bo.Utilisateur;
 import fr.eni.controlers.BusinessException;
 import fr.eni.dal.DAOFactory;
+import fr.eni.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
-	
+
 	public boolean connexion(String pseudo, String email, String motDePasse) throws BusinessException {
 		BusinessException exception = new BusinessException();
 		Utilisateur utilisateur = new Utilisateur(pseudo, email, motDePasse);
-		
-		
-		return false;
-		
+
+		// recuperation de la liste d'utilisateurs
+		List<Utilisateur> liste = new ArrayList<Utilisateur>();
+		UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+		liste = utilisateurDAO.selectTous();
+		System.out.println(liste);
+
+		if (liste.contains(utilisateur)) {
+			return true;
+		} else {
+			exception.ajouterErreur(CodesErreurBLL.RULE_USERNAME_ERREUR);
+			return false;
+		}
 	}
 
 	public Utilisateur ajouter(String pseudo, String nom, String prenom, String email, String telephone, String rue,

@@ -2,7 +2,10 @@ package fr.eni.dal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.bll.CodesErreurBLL;
 import fr.eni.bo.Utilisateur;
@@ -47,5 +50,36 @@ public class UtilisateurDAO {
 		
 	}
 
+	public List<Utilisateur> selectTous() {
+		try {
+			Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement("SELECT * From Utilisateurs;");
+			ResultSet rs = null;
+			rs = pstmt.executeQuery();
+			Utilisateur utilisateur = null;
+			List<Utilisateur> liste = new ArrayList<Utilisateur>();
+			while (rs.next()) {
+				utilisateur = new Utilisateur(rs.getInt("noUtilisateur"), 
+						rs.getString("pseudo"), 
+						rs.getString("nom"), 
+						rs.getString("prenom"), 
+						rs.getString("email"), 
+						rs.getString("telephone"), 
+						rs.getString("rue"), 
+						rs.getString("codePostal"), 
+						rs.getString("ville"), 
+						rs.getString("motDePasse"), 
+						rs.getInt("credit"), 
+						rs.getInt("administrateur"));
+				liste.add(utilisateur);
+			}
+			cnx.close();
+			return liste;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }
 
