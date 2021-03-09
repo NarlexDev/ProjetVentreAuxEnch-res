@@ -43,8 +43,8 @@ public class UtilisateurManager {
 		if (liste.contains(utilisateur)) {
 			return true;
 		} else {
-			exception.ajouterErreur(CodesErreurBLL.RULE_USERNAME_ERREUR);
-			return false;
+			exception.ajouterErreur(CodesErreurBLL.RULE_AUTHENTIFICATION);
+			throw exception;
 		}
 	}
 
