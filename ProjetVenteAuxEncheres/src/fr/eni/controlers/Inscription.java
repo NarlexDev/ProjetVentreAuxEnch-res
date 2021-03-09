@@ -64,7 +64,6 @@ public class Inscription extends HttpServlet {
 		String codePostal = request.getParameter("codePostal");
 		String ville = request.getParameter("ville");
 		String motDePasse = request.getParameter("motDePasse");
-		String motDePasseBis = request.getParameter("motDePasseBis");
 		//int credit = Integer.parseInt(request.getParameter("credit"));
 		int credit = 0;
 		int administrateur = 0;
@@ -85,7 +84,7 @@ public class Inscription extends HttpServlet {
 		System.out.println(utilisateurManager);
 		
 		try {
-			Utilisateur utilisateur =  utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasseBis, credit, administrateur);
+			Utilisateur utilisateur =  utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 			request.getSession().setAttribute("utilisateur", utilisateur);
 		} catch (BusinessException e) {
 			e.printStackTrace();
