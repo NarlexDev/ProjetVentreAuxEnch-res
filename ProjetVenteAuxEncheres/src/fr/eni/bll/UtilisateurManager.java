@@ -48,24 +48,25 @@ public class UtilisateurManager {
 		}
 	}
 
-	public Utilisateur ajouter(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+	public int ajouter(String pseudo, String nom, String prenom, String email, String telephone, String rue,
 			String codePostal, String ville, String motDePasse, String motDePasseBis, int credit, int administrateur)
 			throws BusinessException {
+		int noUtilisateur = 0;
 		BusinessException exception = new BusinessException();
-		Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
-				motDePasse, motDePasseBis, credit, administrateur);
+		Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
+				motDePasse, credit, administrateur);
 
 		validerPseudo(pseudo, exception);
 		validermotDePasse(motDePasse, motDePasseBis, exception);
 		if (!exception.hasErreurs()) {
-			DAOFactory.getUtilisateurDAO().insert(utilisateur);
+			noUtilisateur = DAOFactory.getUtilisateurDAO().insert(utilisateur);
 		}
 
 		if (exception.hasErreurs()) {
 			throw exception;
 		}
 
-		return utilisateur;
+		return noUtilisateur;
 	}
 
 	private void validerPseudo(String pseudo, BusinessException exception) {

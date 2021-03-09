@@ -93,9 +93,9 @@ public class Inscription extends HttpServlet {
 		System.out.println(utilisateurManager);
 
 		try {
-			Utilisateur utilisateur = utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal,
+			int noUtilisateur = utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal,
 					ville, motDePasse, motDePasseBis, credit, administrateur);
-			request.setAttribute("utilisateur", utilisateur);
+			request.getSession().setAttribute("noUtilisateur", noUtilisateur);
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}
