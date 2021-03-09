@@ -13,6 +13,7 @@ public class Utilisateur {
 	private String motDePasse;
 	private int credit;
 	private int administrateur;
+	private String motDePasseBis;
 
 	public Utilisateur() {
 		// TODO Auto-generated constructor stub
@@ -27,7 +28,7 @@ public class Utilisateur {
 
 	// constructeur sans noUtilisateur pour inscription
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String codePostal, String ville, String motDePasse, int credit, int administrateur) {
+			String codePostal, String ville, String motDePasse, String motDePasseBis, int credit, int administrateur) {
 		super();
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -38,6 +39,7 @@ public class Utilisateur {
 		this.codePostal = codePostal;
 		this.ville = ville;
 		this.motDePasse = motDePasse;
+		this.motDePasseBis = motDePasseBis;
 		this.credit = credit;
 		this.administrateur = administrateur;
 	}
@@ -161,6 +163,14 @@ public class Utilisateur {
 				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal="
 				+ codePostal + ", ville=" + ville + ", motDePasse=" + motDePasse + ", credit=" + credit
 				+ ", administrateur=" + administrateur + "]";
+	}
+
+	public String getMotDePasseBis() {
+		return motDePasseBis;
+	}
+
+	public void setMotDePasseBis(String motDePasseBis) {
+		this.motDePasseBis = motDePasseBis;
 	}
 
 }

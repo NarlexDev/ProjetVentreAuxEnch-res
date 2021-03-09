@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.bll.UtilisateurManager;
 import fr.eni.bo.Utilisateur;
@@ -18,21 +19,26 @@ import fr.eni.bo.Utilisateur;
 @WebServlet("/inscription")
 public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
 
 //		String username;
 //		String mail;
@@ -54,7 +60,7 @@ public class Inscription extends HttpServlet {
 //			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 //		}
 //		request.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
-		
+
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -64,36 +70,40 @@ public class Inscription extends HttpServlet {
 		String codePostal = request.getParameter("codePostal");
 		String ville = request.getParameter("ville");
 		String motDePasse = request.getParameter("motDePasse");
-		//int credit = Integer.parseInt(request.getParameter("credit"));
+		String motDePasseBis = request.getParameter("motDePasseBis");
+		// int credit = Integer.parseInt(request.getParameter("credit"));
 		int credit = 0;
 		int administrateur = 0;
-		//int administrateur = Integer.parseInt(request.getParameter("administrateur"));
+		// int administrateur =
+		// Integer.parseInt(request.getParameter("administrateur"));
+
+		// stocker l'utilisateur dans la session
+		session.setAttribute("pseudo", pseudo);
+		session.setAttribute("nom", nom);
+		session.setAttribute("prenom", prenom);
+		session.setAttribute("email", email);
+		session.setAttribute("telephone", telephone);
+		session.setAttribute("rue", rue);
+		session.setAttribute("codePostal", codePostal);
+		session.setAttribute("ville", ville);
+		session.setAttribute("motDePasse", motDePasse);
+		session.setAttribute("motDePasseBis", motDePasseBis);
 		
-		//stocker l'utilisateur dans la session
-		request.getSession().setAttribute("pseudo", pseudo);
-		request.getSession().setAttribute("nom", nom);
-		request.getSession().setAttribute("prenom", prenom);
-		request.getSession().setAttribute("email", email);
-		request.getSession().setAttribute("telephone", telephone);
-		request.getSession().setAttribute("rue", rue);
-		request.getSession().setAttribute("codePostal", codePostal);
-		request.getSession().setAttribute("ville", ville);
-		request.getSession().setAttribute("motDePasse", motDePasse);
-				
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		System.out.println(utilisateurManager);
-		
+
 		try {
-			Utilisateur utilisateur =  utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
-			request.getSession().setAttribute("utilisateur", utilisateur);
+			Utilisateur utilisateur = utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal,
+					ville, motDePasse, motDePasseBis, credit, administrateur);
+			request.setAttribute("utilisateur", utilisateur);
 		} catch (BusinessException e) {
-			e.printStackTrace();
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}
-		
-		//IL FAUT CREER LA CLASSE UtilisateurManager
-		
-		//redirection vers la page de connexion
-		//request.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
+		request.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
+		// IL FAUT CREER LA CLASSE UtilisateurManager
+
+		// redirection vers la page de connexion
+		// request.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request,
+		// response);
 	}
 }
-

@@ -29,21 +29,45 @@
 			</c:forEach>
 	</c:if>
 	
-	<c:if test="${user != null}">
+	<c:if test="${sessionScope.utilisateur != null}">
 	Inscription realisée avec succes !
 	</c:if>
-	<form action="inscription" method="POST">
-		<label for="username">Username :</label>
-		<input type="text" id="iDusername" name="username" /><br/>
-		<label for="mail">Mail :</label>
-		
-		<input type="text" id="mail" name="mail"/><br/>
-		<label for="username">Password :</label>
-		<input type="text" id="password" name="password"/><br/>
-		<label for="username">Confirmation :</label>
-		<input type="text" id="confirmation" name="confirmation"/><br/>
-		<input type="submit" value="s'inscrire"/>
-	</form>
 	
+	<form action="inscription" method="post">
+    <label for="pseudo">Pseudo :</label>
+    <input type="text" id="pseudo" name="pseudo"><br>
+
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom"><br>
+
+    <label for="prenom">Prénom :</label>
+    <input type="text" id="prenom" name="prenom"><br>
+
+    <label for="telephone">Téléphone :</label>
+    <input type="text" id="telephone" name="telephone"><br>
+
+    <label for="rue">Rue :</label>
+    <input type="text" id="rue" name="rue"><br>
+
+    <label for="codePostal">Code Postal :</label>
+    <input type="text" id="codePostal" name="codePostal"><br>
+
+    <label for="ville">Ville :</label>
+    <input type="text" id="ville" name="ville"><br>
+
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="email"><br>
+
+    <label for="motDePasse">Mot de passe :</label>
+    <input type="password" id="motDePasse" name="motDePasse"><br>
+
+    <label for="motDePasseBis">Confirmation de mot de passe :</label>
+    <input type="password" id="motDePasseBis" name="motDePasseBis"><br>
+
+    <input type="submit" value="s'inscrire">
+
+    </form>
+    <a href="index"><input type="button" value="annuler"></a>
+    
 </body>
 </html>

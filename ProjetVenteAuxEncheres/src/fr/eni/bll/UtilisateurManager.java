@@ -10,39 +10,43 @@ import fr.eni.dal.DAOFactory;
 public class UtilisateurManager {
 
 	public Utilisateur ajouter(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String codePostal, String ville, String motDePasse, int credit, int administrateur) throws BusinessException 
-	{
+			String codePostal, String ville, String motDePasse, String motDePasseBis, int credit, int administrateur)
+			throws BusinessException {
 		BusinessException exception = new BusinessException();
-		Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
-		
-		this.validerPseudo(pseudo, exception);
-		if(!exception.hasErreurs())
-		{
+		Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
+				motDePasse, motDePasseBis, credit, administrateur);
+
+		validerPseudo(pseudo, exception);
+		validermotDePasse(motDePasse, motDePasseBis, exception);
+		if (!exception.hasErreurs()) {
 			DAOFactory.getUtilisateurDAO().insert(utilisateur);
 		}
-		
-		if(exception.hasErreurs())
-		{
+
+		if (exception.hasErreurs()) {
 			throw exception;
 		}
-		
+
 		return utilisateur;
 	}
 
 	private void validerPseudo(String pseudo, BusinessException exception) {
-		
-		 // Regex to check valid username. 
-        String regex = "^[A-Za-z]\\w{5,29}$";
-        // Compile the ReGex 
-        Pattern p = Pattern.compile(regex); 
-        
-        Matcher m = p.matcher(pseudo);  
-        
-        if (!m.matches())
-        {
-        	exception.ajouterErreur(CodesErreurBLL.RULE_USERNAME_ERREUR); 
-        }
-        
+
+		// Regex to check valid username.
+		String regex = "^[A-Za-z]\\w{5,29}$";
+		// Compile the ReGex
+		Pattern p = Pattern.compile(regex);
+
+		Matcher m = p.matcher(pseudo);
+
+		if (!m.matches()) {
+			exception.ajouterErreur(CodesErreurBLL.RULE_USERNAME_ERREUR);
+		}
+
 	}
 
+	private void validermotDePasse(String motDePasse, String motDePasseBis, BusinessException exception) {
+		if (!(motDePasse.equals(motDePasseBis))) {
+			exception.ajouterErreur(CodesErreurBLL.RULE_PASSWORD_AND_CONFIRMATION_ERREUR);
+		}
+	}
 }
