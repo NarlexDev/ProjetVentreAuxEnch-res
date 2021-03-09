@@ -14,5 +14,7 @@ public abstract class CodesErreurBLL {
 	
 	public static final int RULE_PASSWORD_AND_CONFIRMATION_ERREUR=20003;
 	
+	public static final int RULE_AUTHENTIFICATION=20004;
+	
 	public static final int INSERT_EXISTANT=30001;
 }
