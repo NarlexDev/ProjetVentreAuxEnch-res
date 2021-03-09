@@ -46,7 +46,7 @@ public class Connexion extends HttpServlet {
 			if (utilisateurManager.connexion(pseudo, email, motDePasse)) {
 				System.out.println(utilisateurManager.connexion(pseudo, email, motDePasse));
 				//connexion ouverte
-				request.getServletContext().getRequestDispatcher("/WEB-INF/connecte.jsp").forward(request, response);
+				request.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 			} 
 			
 		} catch (BusinessException e) {
@@ -55,7 +55,7 @@ public class Connexion extends HttpServlet {
 		}
 		
 		
-		request.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+		request.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 			
 	}
 
