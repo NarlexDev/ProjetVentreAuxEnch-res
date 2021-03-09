@@ -11,6 +11,24 @@ import fr.eni.dal.DAOFactory;
 import fr.eni.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
+	
+	public void modificationUtilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse, String motDePasseBis, int credit, int administrateur) throws BusinessException {
+		BusinessException exception = new BusinessException();
+		Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
+				motDePasse, motDePasseBis, credit, administrateur);
+
+		validerPseudo(pseudo, exception);
+		validermotDePasse(motDePasse, motDePasseBis, exception);
+		if (!exception.hasErreurs()) {
+			DAOFactory.getUtilisateurDAO().modificationUtilisateur(0, utilisateur);
+		}
+
+		if (exception.hasErreurs()) {
+			throw exception;
+		}
+
+	}
 
 	public boolean connexion(String pseudo, String email, String motDePasse) throws BusinessException {
 		BusinessException exception = new BusinessException();

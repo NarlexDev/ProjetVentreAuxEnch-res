@@ -80,6 +80,25 @@ public class UtilisateurDAO {
 		}
 		return null;
 	}
-	
+	public void modificationUtilisateur(int noUtilisateur, Utilisateur utilisateur) {
+		try {
+			Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement("UPDATE Utilisateurs SET "
+					+ "pseudo=?,"
+					+ "nom=?,"
+					+ "prenom=?,"
+					+ "email=?,"
+					+ "telephone=?,"
+					+ "rue=?,"
+					+ "codePostal=?,"
+					+ "ville=?,"
+					+ "motDePasse=? "
+					+ "WHERE noUtilisateur=?;");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
 
