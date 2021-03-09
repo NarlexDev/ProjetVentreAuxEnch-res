@@ -7,11 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.bll.UserManager;
 import fr.eni.bll.UtilisateurManager;
-import fr.eni.bo.User;
-import fr.eni.ecole.login.bo.Utilisateur;
-import fr.eni.ecole.login.dal.UtilisateurDAO;
+import fr.eni.bo.Utilisateur;
+//import fr.eni.ecole.login.bo.Utilisateur;
+//import fr.eni.ecole.login.dal.UtilisateurDAO;
 
 /**
  * Servlet implementation class Inscription
@@ -82,14 +81,20 @@ public class Inscription extends HttpServlet {
 		request.getSession().setAttribute("ville", ville);
 		request.getSession().setAttribute("motDePasse", motDePasse);
 				
-		UtilisateurManager utilisateurManager = new UtilisateurManager(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		System.out.println(utilisateurManager);
-		utilisateurManager.insert(utilisateurManager);
+		
+		try {
+			Utilisateur utilisateur =  utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasseBis, credit, administrateur);
+			request.getSession().setAttribute("utilisateur", utilisateur);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
 		
 		//IL FAUT CREER LA CLASSE UtilisateurManager
 		
 		//redirection vers la page de connexion
-		request.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
+		//request.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
 	}
 }
 
