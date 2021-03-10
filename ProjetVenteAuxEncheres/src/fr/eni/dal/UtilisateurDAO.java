@@ -15,8 +15,9 @@ public class UtilisateurDAO {
 	
 	
 	private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
-
-	public int insert(Utilisateur utilisateur) throws BusinessException {
+	private static final String SELECT_BY_PSEUDO_AND_EMAIL = "SELECT * From UTILISATEURS WHERE pseudo=? or email=?";
+	
+	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException {
 		try {
 			// 1 - Connection � la BDD
 			Connection cnx = ConnectionProvider.getConnection();
@@ -37,24 +38,56 @@ public class UtilisateurDAO {
 			// 3 - Execution
 			pstmt.executeUpdate();
 			// 4 - Traitement des données
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rs.next())
-			{
-				utilisateur.setNoUtilisateur(rs.getInt(1));
-				return rs.getInt(1);
-			}
+//			ResultSet rs = pstmt.getGeneratedKeys();
+//			if(rs.next())
+//			{
+//				utilisateur.setNoUtilisateur(rs.getInt(1));
+//				return rs.getInt(1);
+//			}
 			cnx.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
-			if(e.getMessage().contains("UNIQUE_PSEUDO_AND_EMAIL"))
+			if(e.getMessage().contains("UNIQUE_PSEUDO"))
 			{
-				businessException.ajouterErreur(CodesErreurBLL.INSERT_EXISTANT);
+				businessException.ajouterErreur(CodesErreurBLL.PSEUDO_EXISTANT);
 			}
+			if(e.getMessage().contains("UNIQUE_EMAIL"))
+			{
+				businessException.ajouterErreur(CodesErreurBLL.EMAIL_EXISTANT);
+			}	
 			throw businessException;
 		}
-		return 0;
-		
+		return utilisateur;
+	}
+	
+	public Utilisateur selectByPseudoOrEmail(String login) {
+		Utilisateur utilisateur = new Utilisateur();
+			try {
+			Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO_AND_EMAIL);
+			pstmt.setString(1, login);
+			pstmt.setString(2, login);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				utilisateur.setCodePostal(rs.getString("codePostal"));
+				utilisateur.setEmail(rs.getString("email"));
+				utilisateur.setPseudo(rs.getString("pseudo"));
+				utilisateur.setMotDePasse(rs.getString("motDePasse"));
+				utilisateur.setNom(rs.getString("nom"));
+				utilisateur.setPrenom(rs.getString("prenom"));
+				utilisateur.setTelephone(rs.getString("telephone"));
+				utilisateur.setRue(rs.getString("rue"));
+				utilisateur.setVille(rs.getString("ville"));
+				utilisateur.setNoUtilisateur(rs.getInt("noUtilisateur"));
+			}
+			cnx.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return utilisateur;
 	}
 
 	public List<Utilisateur> selectTous() {

@@ -36,30 +36,10 @@ public class Inscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		
 		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
-
-//		String username;
-//		String mail;
-//		String confirmation;
-//		String password;
-//		
-//		try 
-//		{
-//			username = request.getParameter("username");
-//			mail = request.getParameter("mail");
-//			confirmation = request.getParameter("confirmation");
-//			password = request.getParameter("password");
-//			
-//			UserManager userManager = new UserManager();
-//			User user =  userManager.ajouter(username, mail, password, confirmation);
-//			request.setAttribute("user", user);
-//		}
-//		catch (BusinessException e) {
-//			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-//		}
-//		request.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
+		
 
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
@@ -72,30 +52,34 @@ public class Inscription extends HttpServlet {
 		String motDePasse = request.getParameter("motDePasse");
 		String motDePasseBis = request.getParameter("motDePasseBis");
 		// int credit = Integer.parseInt(request.getParameter("credit"));
+		int noUtilisateur = 0;
 		int credit = 0;
 		int administrateur = 0;
 		// int administrateur =
 		// Integer.parseInt(request.getParameter("administrateur"));
-
+		
 		// stocker l'utilisateur dans la session
-		session.setAttribute("pseudo", pseudo);
-		session.setAttribute("nom", nom);
-		session.setAttribute("prenom", prenom);
-		session.setAttribute("email", email);
-		session.setAttribute("telephone", telephone);
-		session.setAttribute("rue", rue);
-		session.setAttribute("codePostal", codePostal);
-		session.setAttribute("ville", ville);
-		session.setAttribute("motDePasse", motDePasse);
-		session.setAttribute("motDePasseBis", motDePasseBis);
+//		session.setAttribute("pseudo", pseudo);
+//		session.setAttribute("nom", nom);
+//		session.setAttribute("prenom", prenom);
+//		session.setAttribute("email", email);
+//		session.setAttribute("telephone", telephone);
+//		session.setAttribute("rue", rue);
+//		session.setAttribute("codePostal", codePostal);
+//		session.setAttribute("ville", ville);
+//		session.setAttribute("motDePasse", motDePasse);
+//		session.setAttribute("motDePasseBis", motDePasseBis);
+//		session.setAttribute("noUtilisateur", String.valueOf(noUtilisateur));
+		System.out.println(pseudo);
 		
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		System.out.println(utilisateurManager);
-
+		//System.out.println(utilisateurManager);
+		Utilisateur utilisateur = new Utilisateur();
 		try {
-			int noUtilisateur = utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal,
+			
+			utilisateur = utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal,
 					ville, motDePasse, motDePasseBis, credit, administrateur);
-			request.getSession().setAttribute("noUtilisateur", noUtilisateur);
+			request.setAttribute("utilisateur", utilisateur);
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}

@@ -29,7 +29,7 @@ public class Utilisateur {
 
 	// constructeur sans noUtilisateur pour inscription
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String codePostal, String ville, String motDePasse, String motDePasseBis, int credit, int administrateur) {
+			String codePostal, String ville, String motDePasse, int credit, int administrateur) {
 		super();
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -40,7 +40,6 @@ public class Utilisateur {
 		this.codePostal = codePostal;
 		this.ville = ville;
 		this.motDePasse = motDePasse;
-		this.motDePasseBis = motDePasseBis;
 		this.credit = credit;
 		this.administrateur = administrateur;
 	}

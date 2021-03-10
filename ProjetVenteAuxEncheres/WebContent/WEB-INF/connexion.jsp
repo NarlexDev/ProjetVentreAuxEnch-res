@@ -14,7 +14,7 @@
 	<header>
 		<nav>
 			<ul>
-				<li><a href="index">Accueil</a></li>
+				<li><a href="accueil">Accueil</a></li>
 				<li><a href="connexion">Connexion</a></li>
 				<li><a href="inscription">Inscription</a></li>
 			</ul>
@@ -37,6 +37,14 @@
 			de passe :</label> <input type="password" id="motDePasse" name="motDePasse"><br>
 
 		<input type="submit" value="se connecter">
+	</form>
+	
+	<c:if test= "${ !empty pseudo }" >
+		<p> ${ utilisateurConnecte.pseudo } dans la session </p>
+	</c:if>
+	
+	<form action="deconnexion" method="post">
+		<input type="submit" value="deconnexion" />
 	</form>
 </body>
 </html>

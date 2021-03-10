@@ -32,7 +32,8 @@
 			</c:forEach>
 	</c:if>
 	
-	<c:if test="${sessionScope.utilisateur != null}">
+	<c:if test="${utilisateur != 0}">
+	
 	Inscription realisée avec succes !
 	</c:if>
 	

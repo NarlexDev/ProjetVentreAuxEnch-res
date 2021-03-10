@@ -7,8 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.bll.UtilisateurManager;
+import fr.eni.bo.Utilisateur;
 
 /**
  * Servlet implementation class Index
@@ -36,27 +38,23 @@ public class Connexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		//recuperation de la saisie de connexion
-		String pseudo = request.getParameter("nom");
-		String email = request.getParameter("email");
+		String login = request.getParameter("pseudo");
 		String motDePasse = request.getParameter("motDePasse");
 		
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		
 		try {
-			if (utilisateurManager.connexion(pseudo, email, motDePasse)) {
-				System.out.println(utilisateurManager.connexion(pseudo, email, motDePasse));
-				//connexion ouverte
-				request.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
-			} 
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur = utilisateurManager.connexion(login, motDePasse);
+			session.setAttribute("utilisateurConnecte", utilisateur);
 			
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			e.printStackTrace();
 		}
 		
-		
-		request.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);
-			
+		request.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 	}
 
 }

@@ -38,6 +38,7 @@ public class BusinessException extends Exception {
 	
 	public List<Integer> getListeCodesErreur()
 	{
+		System.out.println("liste=" + this.listeCodesErreur);
 		return this.listeCodesErreur;
 	}
 

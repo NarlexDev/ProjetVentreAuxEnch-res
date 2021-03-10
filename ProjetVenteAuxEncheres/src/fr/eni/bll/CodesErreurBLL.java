@@ -16,5 +16,7 @@ public abstract class CodesErreurBLL {
 	
 	public static final int RULE_AUTHENTIFICATION=20004;
 	
-	public static final int INSERT_EXISTANT=30001;
+	public static final int PSEUDO_EXISTANT=30001;
+	
+	public static final int EMAIL_EXISTANT=30002;
 }
